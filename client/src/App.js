@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import  Movie from './Movies/Movie'
 import  MovieList from './Movies/MovieList'
 
@@ -13,11 +13,13 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Router addToSavedList={addToSavedList}>
       <div>
         <SavedList list={savedList} />
-        <Route path="/" exact component={MovieList} ></Route>
-        <Route path="/movies/:id" component={Movie} ></Route>
+        <Switch>
+          <Route path="/" exact component={MovieList} ></Route>
+          <Route path="/movies/:id" render={props => <Movie {...props} addToSavedList={addToSavedList}></Movie>} ></Route>
+        </Switch>
       </div>
 
       
